@@ -1,12 +1,18 @@
+namespace QuantumWalk{ 
+import Std.Convert.ResultArrayAsInt;
 open Microsoft.Quantum.Intrinsic;
 open Microsoft.Quantum.Canon;
 open Microsoft.Quantum.Diagnostics;
+open Microsoft.Quantum.Convert;
+open Microsoft.Quantum.Math;
+open Microsoft.Quantum.Measurement;
+
 
 operation Main() : Unit {
 
     let numSteps = 3;
-    let numPositions = 4;
-    RunQuantumWalk(numSteps, numPositions);
+    let numQubits = 4;
+    RunQuantumWalk(numSteps, numQubits);
     
 }
 
@@ -53,15 +59,22 @@ operation moveLeft(coin : Qubit, pos : Qubit[]) : Unit {
     X(coin);
 }
 
-operation RunQuantumWalk(numSteps : Int, numPositions : Int) : Unit {
+operation RunQuantumWalk(numSteps : Int, numQubits : Int) : Int {
     use coin = Qubit(); 
-    use positions = Qubit[numPositions];
+    use positions = Qubit[numQubits];
+    for i in 0 .. numQubits-2 {
+        X(positions[i]);
+    }
+    
     for step in 1 .. numSteps {
         QuantumStep(coin, positions);
     }
     // Measure the final position
     let results = MeasureEachZ(positions);
-    Message($"Final position: {results}");
+    let intresults = ResultArrayAsInt(results);
+    Message($"Final position: {intresults}");
     ResetAll(positions);
     Reset(coin);
+    return intresults;
+}
 }

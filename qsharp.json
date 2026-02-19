@@ -1,1 +1,4 @@
-{}
+{
+  "author": "Nicolas Sere",
+  "files": ["src/Main.qs"]
+}
