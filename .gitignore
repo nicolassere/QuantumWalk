@@ -1,0 +1,13 @@
+# Generated quantum walk plots
+qwalk_*.png
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Q# build artifacts
+bin/
+obj/
+*.dll
+*.exe

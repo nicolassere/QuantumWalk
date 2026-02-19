@@ -1,6 +1,8 @@
 import qsharp
 import matplotlib.pyplot as plt
 from collections import Counter
+from datetime import datetime
+
 
 qsharp.init(project_root="./")
 
@@ -48,7 +50,10 @@ for p, prob in zip(positions, probabilities):
         ax.text(p, prob + 0.002, f"{prob:.2f}", ha="center", va="bottom", fontsize=8)
 
 plt.tight_layout()
-plt.savefig("quantum_walk_distribution.png", dpi=150)
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+filename = f"qwalk_steps{NUM_STEPS}_qubits{NUM_QUBITS}_shots{NUM_SHOTS}_{timestamp}.png"
+
+plt.savefig(filename, dpi=150)
 plt.show()
 
 print(f"\nTop 5 positions:")
